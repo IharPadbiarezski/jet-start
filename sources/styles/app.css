@@ -64,6 +64,6 @@
     padding: 5px 0;
 }
 
-.contact_label.webix_view {
+.contact_label.webix_view, .settings_label.webix_view {
     background: rgb(158, 158, 189);
 }
