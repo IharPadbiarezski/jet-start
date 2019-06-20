@@ -67,7 +67,7 @@ export default class DataView extends JetView {
 						this.addItem();
 					}
 				},
-				{view: "button", value: "Delete"}]}
+				{view: "button", value: "Delete", click: () => { this.deleteItem(); }}]}
 			]
 		};
 	}
@@ -77,6 +77,8 @@ export default class DataView extends JetView {
 		countriesView.parse(countries);
 		const statusesView = this.$$("statuses_view");
 		statusesView.parse(statuses);
+		this.$$("countries_view").attachEvent("onAfterSelect", (id) => { this.selectedId = id.id; });
+		this.$$("statuses_view").attachEvent("onAfterSelect", (id) => { this.selectedId = id.id; });
 	}
 
 	addItem() {
@@ -85,6 +87,15 @@ export default class DataView extends JetView {
 		}
 		else {
 			this.$$("statuses_view").add({Name: "New Name", Icon: "New Icon"});
+		}
+	}
+
+	deleteItem() {
+		if (this.$$("tabbarApp").getValue() === "countries_view") {
+			this.$$("countries_view").remove(this.selectedId);
+		}
+		else {
+			this.$$("statuses_view").remove(this.selectedId);
 		}
 	}
 }
