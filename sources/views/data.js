@@ -7,6 +7,7 @@ export default class DataView extends JetView {
 		let tabbar = {
 			view: "tabbar",
 			multiview: true,
+			id: "tabbarApp",
 			animate: {type: "flip", direction: "top"},
 			options: [
 				{
@@ -25,10 +26,13 @@ export default class DataView extends JetView {
 			id: "countries_view",
 			view: "datatable",
 			css: "align-center",
+			select: true,
 			scroll: "y",
+			editable: true,
+			editaction: "dblclick",
 			columns: [
-				{id: "id", header: "", width: 50, sort: "int"},
-				{id: "Name", header: "Name", fillspace: true, sort: "string"}
+				{id: "id", header: "", width: 150, sort: "int"},
+				{id: "Name", header: "Name", fillspace: true, editor: "text", sort: "string"}
 			]
 		};
 
@@ -36,10 +40,13 @@ export default class DataView extends JetView {
 			id: "statuses_view",
 			view: "datatable",
 			scroll: "y",
+			editable: true,
+			editaction: "dblclick",
 			css: "align-center",
+			select: true,
 			columns: [
-				{id: "Name", header: "Name", fillspace: true, sort: "string"},
-				{id: "Icon", header: "Icon", fillspace: true, sort: "string"}
+				{id: "Name", header: "Name", fillspace: true, editor: "text", sort: "string"},
+				{id: "Icon", header: "Icon", fillspace: true, editor: "text", sort: "string"}
 			]
 		};
 
@@ -54,7 +61,13 @@ export default class DataView extends JetView {
 						countriesView, statusesView
 					]
 				},
-				{cols: [{view: "button", value: "Add"}, {view: "button", value: "Delete"}]}
+				{cols: [{view: "button",
+					value: "Add",
+					click: () => {
+						this.addItem();
+					}
+				},
+				{view: "button", value: "Delete"}]}
 			]
 		};
 	}
@@ -64,5 +77,14 @@ export default class DataView extends JetView {
 		countriesView.parse(countries);
 		const statusesView = this.$$("statuses_view");
 		statusesView.parse(statuses);
+	}
+
+	addItem() {
+		if (this.$$("tabbarApp").getValue() === "countries_view") {
+			this.$$("countries_view").add({id: "", Name: "New Name"});
+		}
+		else {
+			this.$$("statuses_view").add({Name: "New Name", Icon: "New Icon"});
+		}
 	}
 }
