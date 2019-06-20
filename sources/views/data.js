@@ -1,23 +1,22 @@
-import {JetView} from "webix-jet";
+import {JetView, plugins} from "webix-jet";
 import {countries} from "../models/countries";
 import {statuses} from "../models/statuses";
-import DataTableView from "./datatable";
+import CommonData from "./datatable";
 
 export default class DataView extends JetView {
 	config() {
 		let tabbar = {
 			view: "tabbar",
 			multiview: true,
-			id: "tabbarApp",
-			animate: {type: "flip", direction: "top"},
+			id: "data:tabbar",
 			options: [
 				{
 					value: "Countries",
-					id: "countries_view"
+					id: "data:countries"
 				},
 				{
 					value: "Statuses",
-					id: "statuses_view"
+					id: "data:statuses"
 				}
 			],
 			height: 50
@@ -30,32 +29,16 @@ export default class DataView extends JetView {
 				{
 					animate: false,
 					cells: [
-						{$subview: new DataTableView(this.app, "", countries), id: "countries_view"},
-						{$subview: new DataTableView(this.app, "", statuses), id: "statuses_view"}
+						{id: "data:countries", $subview: new CommonData(this.app, "", countries)},
+						{id: "data:statuses", $subview: new CommonData(this.app, "", statuses)}
 					]
 				}
+
 			]
 		};
 	}
 
 	init() {
-	}
-
-	addItem() {
-		// if (this.$$("tabbarApp").getValue() === "countries_view") {
-		// 	this.$$("countries_view").add({id: "", Name: "New Name"});
-		// }
-		// else {
-		// 	this.$$("statuses_view").add({Name: "New Name", Icon: "New Icon"});
-		// }
-	}
-
-	deleteItem() {
-		// if (this.$$("tabbarApp").getValue() === "countries_view" && this.selCountryId) {
-		// 	this.$$("countries_view").remove(this.selCountryId);
-		// }
-		// else if (this.$$("tabbarApp").getValue() === "statuses_view" && this.selStatusId) {
-		// 	this.$$("statuses_view").remove(this.selStatusId);
-		// }
+		this.use(plugins.Menu, "data:tabbar");
 	}
 }
