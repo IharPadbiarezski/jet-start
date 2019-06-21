@@ -12,12 +12,11 @@ export default class ContactsData extends JetView {
 					localId: "list",
 					scroll: false,
 					template: "#Name# - #Email#  <span class='webix_icon wxi-close rmvicon'></span>",
-					on:{ 
-						onAfterSelect: (id) => { 
+					on: {
+						onAfterSelect: (id) => {
 							this.show(`../start?id=${id}`);
-						 }
-					}
-					,
+						}
+					},
 					onClick: {
 						rmvicon: (e, id) => {
 							this.webix.confirm({

@@ -1,5 +1,4 @@
 import {JetView} from "webix-jet";
-import {contacts} from "../../models/contacts";
 import {countries} from "../../models/countries";
 import {statuses} from "../../models/statuses";
 
@@ -19,24 +18,24 @@ export default class ContactsForm extends JetView {
 					view: "combo",
 					name: "country",
 					label: "Country",
-					options: { body: {
-						data: countries, template: "#Name#" }}
+					options: {
+						body: {
+							data: countries, template: "#Name#"
+						}
+					}
 				},
 				{
 					view: "combo",
 					name: "status",
 					label: "Status",
-					options: { body: {
-						data: statuses, template: "#Name#" }}
+					options: {body: {
+						data: statuses, template: "#Name#"}}
 				},
 				{
 					view: "button",
 					value: "Save",
 					click: () => {
-						const form = this.getRoot();
-						if (form.validate()) {
-							console.log("Hi")
-						}
+						this.addRow();
 					}
 				},
 				{}
@@ -49,6 +48,12 @@ export default class ContactsForm extends JetView {
 	}
 
 	init() {
-		// this.$$("form").setValues(this.getRoot().$$("list").getSelectedId());
+	}
+
+	addRow() {
+		const form = this.getRoot();
+		if (form.validate()) {
+			
+		}
 	}
 }
