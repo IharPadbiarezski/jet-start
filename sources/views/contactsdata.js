@@ -12,7 +12,21 @@ export default class ContactsData extends JetView {
 					localId: "list",
 					scroll: false,
 					template: "#Name# - #Email#  <span class='webix_icon wxi-close rmvicon'></span>",
-					click: () => { console.log("Its me") }
+					on:{ 
+						onAfterSelect: (id) => { 
+							this.show(`../start?id=${id}`);
+						 }
+					}
+					,
+					onClick: {
+						rmvicon: (e, id) => {
+							this.webix.confirm({
+								text: "Are you sure you want to remove the contact?"
+							}).then(() => {
+								this.$$("list").remove(id);
+							});
+						}
+					}
 				}
 			]
 		};
@@ -22,7 +36,5 @@ export default class ContactsData extends JetView {
 		const list = this.$$("list");
 		list.parse(contacts);
 		list.select(list.getFirstId());
-		const id = this.$$("list").getSelectedId();
-		console.log(id);
 	}
 }

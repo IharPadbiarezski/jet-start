@@ -1,10 +1,13 @@
 import {JetView} from "webix-jet";
 import {contacts} from "../../models/contacts";
+import {countries} from "../../models/countries";
+import {statuses} from "../../models/statuses";
 
 export default class ContactsForm extends JetView {
 	config() {
 		return {
 			view: "form",
+			localId: "form",
 			elements: [
 				{
 					view: "text",	name: "name", label: "User Name"
@@ -16,13 +19,15 @@ export default class ContactsForm extends JetView {
 					view: "combo",
 					name: "country",
 					label: "Country",
-					options: ["Belarus", "Russia", "Ukraine"]
+					options: { body: {
+						data: countries, template: "#Name#" }}
 				},
 				{
 					view: "combo",
 					name: "status",
 					label: "Status",
-					options: ["Standard", "Silver", "Gold", "Platinum"]
+					options: { body: {
+						data: statuses, template: "#Name#" }}
 				},
 				{
 					view: "button",
@@ -30,7 +35,6 @@ export default class ContactsForm extends JetView {
 					click: () => {
 						const form = this.getRoot();
 						if (form.validate()) {
-							// this.saveContact(form.getValues());
 							console.log("Hi")
 						}
 					}
@@ -42,5 +46,9 @@ export default class ContactsForm extends JetView {
 				email: webix.rules.isEmail
 			}
 		};
+	}
+
+	init() {
+		// this.$$("form").setValues(this.getRoot().$$("list").getSelectedId());
 	}
 }
