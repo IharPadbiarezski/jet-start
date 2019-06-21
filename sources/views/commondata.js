@@ -11,6 +11,7 @@ export default class CommonData extends JetView {
 			rows: [
 				{
 					view: "datatable",
+					localId: "commonDataTable",
 					editable: true,
 					autoConfig: true,
 					editaction: "dblclick"
@@ -29,24 +30,18 @@ export default class CommonData extends JetView {
 
 	init(view) {
 		view.queryView("datatable").parse(this._tdata);
-		this.getRoot().queryView("datatable").attachEvent("onAfterSelect", (id) => { this.selectId = id.id; });
 	}
 
 	addRow() {
-		if (this.getRoot().queryView("datatable").$scope._container.id === "data:countries") {
-			this.getRoot().queryView("datatable").add({id: "", Name: "New Name"});
-		}
-		else {
-			this.getRoot().queryView("datatable").add({Name: "New Name", Icon: "New Icon"});
-		}
+		const datatable = this.$$("commonDataTable");
+		datatable.add({Name: "New Name", Icon: "New Icon"});
 	}
 
 	deleteRow() {
-		if (this.getRoot().queryView("datatable").$scope._container.id === "data:countries") {
-			this.getRoot().queryView("datatable").remove(1);
-		}
-		else {
-			this.getRoot().queryView("datatable").remove(1);
+		const datatable = this.$$("commonDataTable");
+		const id = this.$$("commonDataTable").getSelectedId();
+		if (datatable.isSelected(id)) {
+			datatable.remove(datatable.getSelectedId());
 		}
 	}
 }

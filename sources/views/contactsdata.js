@@ -7,7 +7,12 @@ export default class ContactsData extends JetView {
 			rows: [
 				{view: "label", label: "Contacts", align: "center", localId: "label", css: "contact_label"},
 				{
-					view: "list", localId: "list", scroll: false, template: "#Name# - #Email#  <span class='webix_icon wxi-close rmvicon'></span>"
+					view: "list",
+					select: true,
+					localId: "list",
+					scroll: false,
+					template: "#Name# - #Email#  <span class='webix_icon wxi-close rmvicon'></span>",
+					click: () => { console.log("Its me") }
 				}
 			]
 		};
@@ -16,5 +21,8 @@ export default class ContactsData extends JetView {
 	init() {
 		const list = this.$$("list");
 		list.parse(contacts);
+		list.select(list.getFirstId());
+		const id = this.$$("list").getSelectedId();
+		console.log(id);
 	}
 }

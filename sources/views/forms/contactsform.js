@@ -13,10 +13,26 @@ export default class ContactsForm extends JetView {
 					view: "text", name: "email", label: "Email"
 				},
 				{
+					view: "combo",
+					name: "country",
+					label: "Country",
+					options: ["Belarus", "Russia", "Ukraine"]
+				},
+				{
+					view: "combo",
+					name: "status",
+					label: "Status",
+					options: ["Standard", "Silver", "Gold", "Platinum"]
+				},
+				{
 					view: "button",
 					value: "Save",
 					click: () => {
-						console.log("Hi")
+						const form = this.getRoot();
+						if (form.validate()) {
+							// this.saveContact(form.getValues());
+							console.log("Hi")
+						}
 					}
 				},
 				{}
