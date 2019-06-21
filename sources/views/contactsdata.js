@@ -22,7 +22,7 @@ export default class ContactsData extends JetView {
 							this.webix.confirm({
 								text: "Are you sure you want to remove the contact?"
 							}).then(() => {
-								this.$$("list").remove(id);
+								contacts.remove(id);
 							});
 						}
 					}
@@ -33,7 +33,14 @@ export default class ContactsData extends JetView {
 
 	init() {
 		const list = this.$$("list");
-		list.parse(contacts);
-		list.select(list.getFirstId());
+		list.sync(contacts);
+
+		let id = this.getParam("id");
+
+		if(!id || !contacts.exists(id))
+			id = contacts.getFirstId();
+
+		if(id)
+			list.select(id);
 	}
 }
