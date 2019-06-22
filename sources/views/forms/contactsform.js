@@ -1,7 +1,7 @@
 import {JetView} from "webix-jet";
-import {countries} from "../../models/countries";
-import {statuses} from "../../models/statuses";
-import {contacts} from "../../models/contacts";
+import {countries} from "../../models/backenddata/countries";
+import {statuses} from "../../models/backenddata/statuses";
+import {contacts} from "../../models/backenddata/contacts";
 
 export default class ContactsForm extends JetView {
 	config() {
@@ -51,13 +51,11 @@ export default class ContactsForm extends JetView {
 	}
 
 	urlChange(view) {
-		contacts.waitData.then(() => {
-			const id = this.getParam("id");
-			const values = contacts.getItem(id);
-			let form = this.$$("form");
-			form.clearValidation();
-			if (values) { view.setValues(values); }
-		});
+		const id = this.getParam("id");
+		const values = contacts.getItem(id);
+		let form = this.$$("form");
+		form.clearValidation();
+		if (values) { view.setValues(values); }
 	}
 
 	updateContact() {

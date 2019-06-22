@@ -1,6 +1,6 @@
 import {JetView, plugins} from "webix-jet";
-import {countries} from "../models/countries";
-import {statuses} from "../models/statuses";
+import {countries} from "../models/backenddata/countries";
+import {statuses} from "../models/backenddata/statuses";
 import CommonData from "./commondata";
 
 export default class DataView extends JetView {

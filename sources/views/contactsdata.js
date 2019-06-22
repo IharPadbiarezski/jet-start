@@ -1,5 +1,5 @@
 import {JetView} from "webix-jet";
-import {contacts} from "../models/contacts";
+import {contacts} from "../models/backenddata/contacts";
 
 export default class ContactsData extends JetView {
 	config() {
@@ -42,16 +42,14 @@ export default class ContactsData extends JetView {
 	}
 
 	init() {
-		contacts.waitData.then(() => {
-			const list = this.$$("list");
-			list.sync(contacts);
+		const list = this.$$("list");
+		list.sync(contacts);
 
-			let id = this.getParam("id");
+		let id = this.getParam("id");
 
-			if (!id || !contacts.exists(id)) { id = contacts.getFirstId(); }
+		if (!id || !contacts.exists(id)) { id = contacts.getFirstId(); }
 
-			if (id) { list.select(id); }
-		});
+		if (id) { list.select(id); }
 	}
 
 	addContact() {
