@@ -5,20 +5,21 @@ import {contacts} from "../../models/contacts";
 
 export default class ContactsForm extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			view: "form",
 			localId: "form",
 			elements: [
 				{
-					view: "text",	name: "Name", label: "User Name", invalidMessage: "Please entry your name"
+					view: "text",	name: "Name", label: _("User Name"), invalidMessage: "Please entry your name"
 				},
 				{
-					view: "text", name: "Email", label: "Email", invalidMessage: "Please entry a valid email"
+					view: "text", name: "Email", label: _("Email"), invalidMessage: "Please entry a valid email"
 				},
 				{
 					view: "combo",
 					name: "Country",
-					label: "Country",
+					label: _("Country"),
 					options: {
 						body: {
 							data: countries, template: "#Name#"
@@ -27,14 +28,14 @@ export default class ContactsForm extends JetView {
 				},
 				{
 					view: "combo",
-					name: "Status",
+					name: _("Status"),
 					label: "Status",
 					options: {body: {
 						data: statuses, template: "#Name#"}}
 				},
 				{
 					view: "button",
-					value: "Save",
+					value: _("Save"),
 					css: "webix_primary",
 					click: () => {
 						this.updateContact();

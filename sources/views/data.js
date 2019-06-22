@@ -5,17 +5,18 @@ import CommonData from "./commondata";
 
 export default class DataView extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		let tabbar = {
 			view: "tabbar",
 			multiview: true,
 			id: "data:tabbar",
 			options: [
 				{
-					value: "Countries",
+					value: _("Countries"),
 					id: "data:countries"
 				},
 				{
-					value: "Statuses",
+					value: _("Statuses"),
 					id: "data:statuses"
 				}
 			],
@@ -24,7 +25,7 @@ export default class DataView extends JetView {
 
 		return {
 			rows: [
-				{view: "label", label: "Data", align: "center", localId: "label", css: "contact_label"},
+				{view: "label", label: _("Data"), align: "center", localId: "label", css: "contact_label"},
 				tabbar,
 				{
 					animate: false,

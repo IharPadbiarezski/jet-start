@@ -3,9 +3,10 @@ import {contacts} from "../models/contacts";
 
 export default class ContactsData extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			rows: [
-				{view: "label", label: "Contacts", align: "center", localId: "label", css: "contact_label"},
+				{view: "label", label: _("Contacts"), align: "center", localId: "label", css: "contact_label"},
 				{
 					view: "list",
 					select: true,
@@ -30,7 +31,7 @@ export default class ContactsData extends JetView {
 				},
 				{
 					view: "button",
-					value: "Add",
+					value: _("Add"),
 					css: "webix_primary",
 					click: () => {
 						this.addContact();

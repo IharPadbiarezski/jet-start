@@ -7,6 +7,7 @@ export default class CommonData extends JetView {
 	}
 
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			rows: [
 				{
@@ -19,8 +20,8 @@ export default class CommonData extends JetView {
 				{
 					cols: [
 						{gravity: 2},
-						{view: "button", value: "Add", css: "webix_primary", click: () => { this.addRow(); }},
-						{view: "button", value: "Delete", click: () => { this.deleteRow(); }}
+						{view: "button", value: _("Add"), css: "webix_primary", click: () => { this.addRow(); }},
+						{view: "button", value: _("Delete"), click: () => { this.deleteRow(); }}
 					]
 				}
 			]
