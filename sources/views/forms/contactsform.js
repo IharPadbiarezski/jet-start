@@ -17,7 +17,7 @@ export default class ContactsForm extends JetView {
 				},
 				{
 					view: "combo",
-					name: "country",
+					name: "Country",
 					label: "Country",
 					options: {
 						body: {
@@ -27,7 +27,7 @@ export default class ContactsForm extends JetView {
 				},
 				{
 					view: "combo",
-					name: "status",
+					name: "Status",
 					label: "Status",
 					options: {body: {
 						data: statuses, template: "#Name#"}}
@@ -36,7 +36,7 @@ export default class ContactsForm extends JetView {
 					view: "button",
 					value: "Save",
 					click: () => {
-						//save to model (collection)
+						this.updateContact();
 					}
 				},
 				{}
@@ -48,12 +48,18 @@ export default class ContactsForm extends JetView {
 		};
 	}
 
-	urlChange(view){
+	urlChange(view) {
 		const id = this.getParam("id");
 		const values = contacts.getItem(id);
 
-		if(values)
-			view.setValues(values);
+		if (values) { view.setValues(values); }
 
+	}
+
+	updateContact() {
+		let form = this.$$("form");
+		const values = form.getValues();
+		const id = this.getParam("id");
+		contacts.updateItem(id, values);
 	}
 }
