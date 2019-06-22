@@ -11,14 +11,4 @@ export default class ContactsView extends JetView {
 			]
 		};
 	}
-
-	ready(view) {
-		// const form = view.queryView({view: "form"});
-		// // const list = view.queryView({view: "list"});
-		// console.log(form); 
-		// let id = this.getParam("id");
-		// let contactItem = contacts.getItem(id);
-		// console.log(contactItem);
-		// form.setValues(contactItem);
-	}
 }

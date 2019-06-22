@@ -26,6 +26,14 @@ export default class ContactsData extends JetView {
 							});
 						}
 					}
+				},
+				{
+					view: "button",
+					value: "Add",
+					css: "webix_primary",
+					click: () => {
+						this.addRow();
+					}
 				}
 			]
 		};
@@ -37,10 +45,12 @@ export default class ContactsData extends JetView {
 
 		let id = this.getParam("id");
 
-		if(!id || !contacts.exists(id))
-			id = contacts.getFirstId();
+		if (!id || !contacts.exists(id)) { id = contacts.getFirstId(); }
 
-		if(id)
-			list.select(id);
+		if (id) { list.select(id); }
+	}
+
+	addRow() {
+		contacts.add({ });
 	}
 }

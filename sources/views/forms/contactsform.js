@@ -35,6 +35,7 @@ export default class ContactsForm extends JetView {
 				{
 					view: "button",
 					value: "Save",
+					css: "webix_primary",
 					click: () => {
 						this.updateContact();
 					}
