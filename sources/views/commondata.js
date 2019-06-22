@@ -35,6 +35,7 @@ export default class CommonData extends JetView {
 	addRow() {
 		const datatable = this.$$("commonDataTable");
 		datatable.add({Name: "New Name", Icon: "New Icon"});
+		webix.message({type: "success", text: "New item is added!"});
 	}
 
 	deleteRow() {
@@ -42,6 +43,7 @@ export default class CommonData extends JetView {
 		const id = this.$$("commonDataTable").getSelectedId();
 		if (datatable.isSelected(id)) {
 			datatable.remove(datatable.getSelectedId());
+			webix.message({type: "success", text: "The item is deleted!"});
 		}
 	}
 }

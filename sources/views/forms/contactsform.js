@@ -10,10 +10,10 @@ export default class ContactsForm extends JetView {
 			localId: "form",
 			elements: [
 				{
-					view: "text",	name: "Name", label: "User Name"
+					view: "text",	name: "Name", label: "User Name", invalidMessage: "Please entry your name"
 				},
 				{
-					view: "text", name: "Email", label: "Email"
+					view: "text", name: "Email", label: "Email", invalidMessage: "Please entry a valid email"
 				},
 				{
 					view: "combo",
@@ -43,24 +43,36 @@ export default class ContactsForm extends JetView {
 				{}
 			],
 			rules: {
-				name: webix.rules.isNotEmpty,
-				email: webix.rules.isEmail
+				Name: webix.rules.isNotEmpty,
+				Email: webix.rules.isEmail
 			}
 		};
 	}
 
 	urlChange(view) {
-		const id = this.getParam("id");
-		const values = contacts.getItem(id);
-
-		if (values) { view.setValues(values); }
-
+		contacts.waitData.then(() => {
+			const id = this.getParam("id");
+			const values = contacts.getItem(id);
+			let form = this.$$("form");
+			form.clearValidation();
+			if (values) { view.setValues(values); }
+		});
 	}
 
 	updateContact() {
 		let form = this.$$("form");
 		const values = form.getValues();
 		const id = this.getParam("id");
-		contacts.updateItem(id, values);
+		if (contacts.exists(id)) {
+			if (this.$$("form").validate()) {
+				contacts.updateItem(id, values);
+				webix.message({type: "success", text: "The contact is updated!"});
+			}
+		}
+		else {
+			webix.message({type: "debug", text: "Sorry, you cann't update a non-existen contact. Please, choose another contact"});
+			form.clear();
+			form.clearValidation();
+		}
 	}
 }
