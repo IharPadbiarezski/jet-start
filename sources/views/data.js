@@ -42,4 +42,8 @@ export default class DataView extends JetView {
 	init() {
 		this.use(plugins.Menu, "tabbar");
 	}
+
+	ready() {
+		this.show("../data?countries=undefined");
+	}
 }
