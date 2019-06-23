@@ -28,8 +28,8 @@ export default class ContactsForm extends JetView {
 				},
 				{
 					view: "combo",
-					name: _("Status"),
-					label: "Status",
+					name: "Status",
+					label: _("Status"),
 					options: {body: {
 						data: statuses, template: "#Name#"}}
 				},
