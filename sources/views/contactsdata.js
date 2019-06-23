@@ -1,6 +1,7 @@
 import {JetView} from "webix-jet";
 import {contacts} from "../models/backenddata/contacts";
-// import {statuses} from "../models/backenddata/statuses";
+import {statuses} from "../models/backenddata/statuses";
+import {countries} from "../models/backenddata/countries";
 
 export default class ContactsData extends JetView {
 	config() {
@@ -46,7 +47,11 @@ export default class ContactsData extends JetView {
 		const list = this.$$("list");
 		list.sync(contacts);
 
-		contacts.waitData.then(() => {
+		webix.promise.all([
+			contacts.waitData,
+			countries.waitData,
+			statuses.waitData
+		]).then(() => {
 			let id = this.getParam("id");
 
 			if (!id || !contacts.exists(id)) { id = contacts.getFirstId(); }
