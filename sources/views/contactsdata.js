@@ -1,5 +1,6 @@
 import {JetView} from "webix-jet";
 import {contacts} from "../models/backenddata/contacts";
+// import {statuses} from "../models/backenddata/statuses";
 
 export default class ContactsData extends JetView {
 	config() {
@@ -11,7 +12,7 @@ export default class ContactsData extends JetView {
 					view: "list",
 					select: true,
 					localId: "list",
-					scroll: false,
+					scroll: "y",
 					template: "#Name# - #Email#  <span class='webix_icon wxi-close rmvicon'></span>",
 					on: {
 						onAfterSelect: (id) => {
@@ -45,11 +46,13 @@ export default class ContactsData extends JetView {
 		const list = this.$$("list");
 		list.sync(contacts);
 
-		let id = this.getParam("id");
+		contacts.waitData.then(() => {
+			let id = this.getParam("id");
 
-		if (!id || !contacts.exists(id)) { id = contacts.getFirstId(); }
+			if (!id || !contacts.exists(id)) { id = contacts.getFirstId(); }
 
-		if (id) { list.select(id); }
+			if (id) { list.select(id); }
+		});
 	}
 
 	addContact() {

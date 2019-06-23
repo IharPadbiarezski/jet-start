@@ -51,6 +51,9 @@ export default class ContactsForm extends JetView {
 	}
 
 	urlChange(view) {
+		contacts.waitData.then(() => {
+			view.select(view.getFirstId());
+		});
 		const id = this.getParam("id");
 		const values = contacts.getItem(id);
 		let form = this.$$("form");

@@ -1,4 +1,6 @@
 import {JetView} from "webix-jet";
+import {countries} from "../models/backenddata/countries";
+import {statuses} from "../models/backenddata/statuses";
 
 export default class CommonData extends JetView {
 	constructor(app, name, data) {
@@ -15,7 +17,18 @@ export default class CommonData extends JetView {
 					localId: "commonDataTable",
 					editable: true,
 					autoConfig: true,
-					editaction: "dblclick"
+					editaction: "dblclick",
+					on: {
+						onAfterSelect: (id) => {
+							let url = this.getUrlString();
+							if (url.includes("countries")) {
+								this.show(`../data?countries=undefined?id=${id}`);
+							}
+							if (url.includes("statuses")) {
+								this.show(`../data?statuses=undefined?id=${id}`);
+							}
+						}
+					}
 				},
 				{
 					cols: [
@@ -34,17 +47,45 @@ export default class CommonData extends JetView {
 	}
 
 	addRow() {
-		const datatable = this.$$("commonDataTable");
-		datatable.add({Name: "New Name", Icon: "New Icon"});
-		webix.message({type: "success", text: "New item is added!"});
+		let url = this.getUrlString();
+		if (url.includes("countries")) {
+			countries.add({Name: "New Name", Icon: "New Icon"});
+			this.showMessage("success", "New country added");
+		}
+		if (url.includes("statuses")) {
+			statuses.add({Name: "Status Name", Icon: "New Icon"});
+			this.showMessage("success", "New status added");
+		}
 	}
 
 	deleteRow() {
-		const datatable = this.$$("commonDataTable");
-		const id = this.$$("commonDataTable").getSelectedId();
-		if (datatable.isSelected(id)) {
-			datatable.remove(datatable.getSelectedId());
-			webix.message({type: "success", text: "The item is deleted!"});
+		let url = this.getUrlString();
+		let id = this.getParam("id");
+		if (url.includes("countries")) {
+			countries.waitData.then(() => {
+				this.webix.confirm({
+					text: "Are you sure you want to remove the country?"
+				}).then(() => {
+					if (id) { countries.remove(id); }
+					this.showMessage("success", "The country is deleted");
+				});
+				return false;
+			});
 		}
+		if (url.includes("statuses")) {
+			statuses.waitData.then(() => {
+				this.webix.confirm({
+					text: "Are you sure you want to remove the status?"
+				}).then(() => {
+					if (id) { statuses.remove(id); }
+					this.showMessage("success", "The status is deleted");
+				});
+				return false;
+			});
+		}
+	}
+
+	showMessage(type, text) {
+		webix.message({type: `${type}`, text: `${text}`});
 	}
 }

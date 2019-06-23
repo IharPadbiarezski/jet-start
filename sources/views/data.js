@@ -9,7 +9,7 @@ export default class DataView extends JetView {
 		let tabbar = {
 			view: "tabbar",
 			multiview: true,
-			id: "data:tabbar",
+			id: "tabbar",
 			options: [
 				{
 					value: _("Countries"),
@@ -40,6 +40,6 @@ export default class DataView extends JetView {
 	}
 
 	init() {
-		this.use(plugins.Menu, "data:tabbar");
+		this.use(plugins.Menu, "tabbar");
 	}
 }
