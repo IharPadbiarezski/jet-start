@@ -20,7 +20,8 @@ export default class DataView extends JetView {
 					id: "data:statuses"
 				}
 			],
-			height: 50
+			height: 50,
+			//onAfterTabClick
 		};
 
 		return {
